@@ -23,7 +23,7 @@ helm pull prometheus-community/kube-prometheus-stack --version 32.2.1 --untar
 
 ## OPTION-2
 
-### Update your helm values and deploy using kubectl apply
+### Update your helm values and deploy using `kubectl apply`
 
 Reference the helm values `prometheus-test-helm-values.yaml` for all the required changes for Test.
 
@@ -33,7 +33,7 @@ Reference `prometheus-prod-helm-values.yaml` for Prod.
 
 `helm template prometheus --namespace prometheus --values prometheus-test-helm-values.yaml --output-dir ./manifests/test/ prometheus --repo https://prometheus-community.github.io/helm-charts`
 
-### Apply all the rendered yaml files using kubectl apply
+### Apply all the rendered yaml files using `kubectl apply`
 
 _Test_
 `k apply -Rf manifests/test/prometheus -n prometheus`
@@ -51,12 +51,14 @@ _Prod_
 
 _POST INSTALL CONFIGURATION_
 
-# Grafana Ingress
+### Grafana Ingress
 
 Deploy Grafana ingress
+
 `k apply -f grafana-ingress.yaml`
 
-# Alert Manager Ingess
+### Alert Manager Ingess
 
 Deploy AlertManager ingress
+
 `k apply -f alert-manager-ingress.yaml`
