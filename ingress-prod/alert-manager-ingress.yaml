@@ -1,0 +1,34 @@
+---
+# Source: prometheus/templates/alertmanager/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    nginx.org/client-max-body-size: 256m
+  labels:
+    name: alertmanager
+    instance: prometheus
+    managed-by: Helm
+    release: prometheus
+    chart: kube-prometheus-stack-32.2.1
+    heritage: Helm
+  name: prometheus-alertmanager
+  namespace: prometheus
+spec:
+  tls:
+    - hosts:
+        - alert.hyper-thread.app
+      secretName: alertmanager-tls
+  rules:
+    - host: alert.hyper-thread.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-kube-prometheus-alertmanager
+                port:
+                  number: 80

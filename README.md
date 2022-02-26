@@ -51,14 +51,34 @@ _Prod_
 
 _POST INSTALL CONFIGURATION_
 
-### Grafana Ingress
+### Create Grafana Ingress
 
 Deploy Grafana ingress
 
-`k apply -f grafana-ingress.yaml`
+_Test_
+`k apply -f ingress-test/grafana-ingress.yaml`
 
-### Alert Manager Ingess
+_Prod_
+`k apply -f ingress-prod/grafana-ingress.yaml`
+
+### Get Grafana credentials
+
+Get the secrets from the prometheus namespace
+
+`kubectl get secrets -n prometheus`
+
+Decode from base64 grafana secrets identified from previous cmd
+
+`k get secret -n prometheus prometheus-grafana -o json | jq '.data | map_values(@base64d)'`
+
+Use decoded password to login
+
+### Create Alert-Manager Ingess
 
 Deploy AlertManager ingress
 
-`k apply -f alert-manager-ingress.yaml`
+_Test_
+`k apply -f ingress-test/alert-manager-ingress.yaml`
+
+_Prod_
+`k apply -f ingress-prod/alert-manager-ingress.yaml`
